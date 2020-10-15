@@ -3,33 +3,9 @@
 
   &#xa0;
 
-  <!-- <a href="https://k8s.netlify.app">Demo</a> -->
 </div>
 
-<h1 align="center">K8s Chapter 1</h1>
-
-<!-- <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8">
-
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8">
-
-  <img alt="License" src="https://img.shields.io/github/license/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8">
-
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8" /> -->
-
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8" /> -->
-
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/{{YOUR_GITHUB_USERNAME}}/k8s?color=56BEB8" /> -->
-
-<!-- Status -->
-
-<!-- <h4 align="center"> 
-	
-</h4> 
-
-<hr> -->
+<h1 align="center">K8s Chapter 2</h1>
 
 <p align="center">
   <a href="#dart-Introduction">Introduction</a> &#xa0; | &#xa0; 
@@ -43,11 +19,14 @@
 
 ## :dart: Introduction ##
 
-The basic building block of K8s cluser it a Pod where we run our containers. In this chapter we will start Pod and see if that is running.
+As you learned in chapter 1 that you are not able to acceess the web application. This happened because container is running inside a pod and pod has it's own network. You cannot access directly from out side. If, any how, you are able to access the webserver then how can you manage to retain the ip address of that container or pod that is ephemeral in nature? There another resource provided by kubernates called, `Service`, is something attached to the container with special keyword called `selector`. In the event of pod container/pod deletion, it will again attached to newly created pod with same selector.
+
 
 ## :sparkles: Command ##
 
 ```bash
+#Service template
+
 # Firt check kubectl is running
 $ kubectl get all
 
@@ -55,15 +34,17 @@ NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   32d
 
 #create a Pod
-$ kubectl create -f Pod.yml
+$ kubectl create -f .
 pod/nginx-app created
+service/myapp-service created
 
 $ kubectl get all
 NAME            READY   STATUS    RESTARTS   AGE
-pod/nginx-app   1/1     Running   0          4m17s
+pod/nginx-app   1/1     Running   0          45s
 
-NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   32d
+NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes      ClusterIP   10.96.0.1      <none>        443/TCP        2d13h
+service/myapp-service   NodePort    10.98.218.37   <none>        80:32122/TCP   45s
 
 ```
 
